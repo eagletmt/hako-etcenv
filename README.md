@@ -1,8 +1,5 @@
-# Hako::Etcenv
-
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/hako/etcenv`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+# Hako::EnvProviders::Etcenv
+Provide variables from [etcd](https://github.com/coreos/etcd) to [hako](https://github.com/eagletmt/hako) using [etcenv](https://github.com/sorah/etcenv).
 
 ## Installation
 
@@ -22,7 +19,24 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```yaml
+image: ryotarai/hello-sinatra
+env:
+  $providers:
+    - type: etcenv
+      url: https://127.0.0.1:2379
+      ca_file: /etc/etcd/ca.crt
+      ssl_cert: /etc/etcd/client.crt
+      ssl_key: /etc/etcd/client.key
+      root: /hako/hello-sinatra
+  PORT: 3000
+  MESSAGE: '#{username}-san!'
+port: 3000
+scheduler:
+  type: echo
+```
+
+It pulls `username` variable from etcd with `/hako/hello-sinatra/username` key.
 
 ## Development
 
