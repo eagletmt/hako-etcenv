@@ -1,11 +1,10 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'hako/etcenv/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'hako-etcenv'
-  spec.version       = Hako::Etcenv::VERSION
+  spec.version       = '0.1.0'
   spec.authors       = ['Kohei Suzuki']
   spec.email         = ['eagletmt@gmail.com']
 
@@ -30,4 +29,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'hako'
   spec.add_development_dependency 'bundler'
   spec.add_development_dependency 'rake'
+  spec.add_development_dependency 'rubocop'
 end
