@@ -13,7 +13,7 @@ module Hako
         unless options['root']
           validation_error!('root must be set')
         end
-        uri = URI.parse(options.fetch['url'])
+        uri = URI.parse(options.fetch('url'))
         @etcd = Etcd.client(
           host: uri.host,
           port: uri.port,
