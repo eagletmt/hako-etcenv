@@ -20,8 +20,8 @@ module Hako
           port: uri.port,
           use_ssl: uri.scheme == 'https',
           ca_file: options.fetch('ca_file', nil),
-          ssl_cert: OpenSSL::X509::Certificate.new(File.read(options.fetch('ssl_cert', nil))),
-          ssl_key: OpenSSL::PKey::RSA.new(File.read(options.fetch('ssl_key', nil))),
+          ssl_cert: OpenSSL::X509::Certificate.new(::File.read(options.fetch('ssl_cert', nil))),
+          ssl_key: OpenSSL::PKey::RSA.new(::File.read(options.fetch('ssl_key', nil))),
         )
         @root = options.fetch('root')
       end
