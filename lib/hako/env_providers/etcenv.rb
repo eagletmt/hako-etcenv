@@ -7,7 +7,7 @@ require 'uri'
 module Hako
   module EnvProviders
     class Etcenv < EnvProvider
-      def initialize(options)
+      def initialize(_root_path, options)
         unless options['url']
           validation_error!('url must be set')
         end
