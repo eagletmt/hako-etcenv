@@ -31,6 +31,10 @@ module Hako
         env
       end
 
+      def can_ask_keys?
+        false
+      end
+
       private
 
       def etcd_client
