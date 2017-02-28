@@ -14,21 +14,16 @@ module Hako
         unless options['root']
           validation_error!('root must be set')
         end
-        uri = URI.parse(options.fetch('url'))
-        @etcd = Etcd.client(
-          host: uri.host,
-          port: uri.port,
-          use_ssl: uri.scheme == 'https',
-          ca_file: options.fetch('ca_file', nil),
-          ssl_cert: ssl_cert(options.fetch('ssl_cert', nil)),
-          ssl_key: ssl_key(options.fetch('ssl_key', nil)),
-        )
+        @uri = URI.parse(options.fetch('url'))
+        @ca_file = options.fetch('ca_file', nil)
+        @ssl_cert = options.fetch('ssl_cert', nil)
+        @ssl_key = options.fetch('ssl_key', nil)
         @root = options.fetch('root')
       end
 
       def ask(variables)
         env = {}
-        ::Etcenv::Environment.new(@etcd, @root).expanded_env.each do |key, val|
+        ::Etcenv::Environment.new(etcd_client, @root).expanded_env.each do |key, val|
           if variables.include?(key)
             env[key] = val
           end
@@ -37,6 +32,17 @@ module Hako
       end
 
       private
+
+      def etcd_client
+        @etcd_client ||= Etcd.client(
+          host: @uri.host,
+          port: @uri.port,
+          use_ssl: @uri.scheme == 'https',
+          ca_file: @ca_file,
+          ssl_cert: ssl_cert(@ssl_cert),
+          ssl_key: ssl_key(@ssl_key),
+        )
+      end
 
       def ssl_cert(cert_path)
         if cert_path
